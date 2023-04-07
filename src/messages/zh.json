@@ -1,0 +1,12 @@
+{
+    "Index": {
+        "title": "Hello world zh!"
+    },
+    "Metadata": {
+        "title": "Test zh!",
+        "description": "Test description zh!"
+    },
+    "LanguageSwitcher": {
+        "switchLocale": "Switch to {locale, select, en {English} zh {Chinese} other {Unknown}}"
+    }
+}
