@@ -1,7 +1,7 @@
 import "./globals.css";
 
-import { useLocale } from "next-intl";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+
 import { notFound } from "next/navigation";
 
 export async function generateMetadata() {
@@ -14,7 +14,7 @@ export async function generateMetadata() {
 }
 
 export default function RootLayout({ children, params }: { children: React.ReactNode; params: any }) {
-    const locale = useLocale();
+    const locale = getLocale();
 
     // Show a 404 error if the user requests an unknown locale
     if (params?.locale !== locale) {
