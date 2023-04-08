@@ -1,9 +1,18 @@
 const ms = require("ms");
 const withNextIntl = require("next-intl/plugin")();
-
+//hktdb.s3.ap-east-1.amazonaws.com
 module.exports = withNextIntl({
     experimental: { appDir: true },
-
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "hktdb.s3.ap-east-1.amazonaws.com",
+                port: "",
+                pathname: "/nc/uploads/noco/hktdb/**",
+            },
+        ],
+    },
     swcMinify: true,
     headers() {
         return [

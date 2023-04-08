@@ -1,6 +1,6 @@
 import "server-only";
 
-import { fetchOneView } from "../../../api/[locale]/route";
+import { fetchOneView } from "@/app/api/_nocodb/fetchOneView";
 import { getLocale } from "next-intl/server";
 import { markdownToHtml } from "../../../../helpers/markdownToHtml";
 import { toUpperFirst } from "../../../../helpers/toUpperFirst";
@@ -42,7 +42,7 @@ export default async function Home({
         locale,
     });
     const json = await test.json();
-    console.log({ json });
+    // console.log({ json });
     const En = toUpperFirst(locale);
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24 max-w-screen overflow-x-hidden">
