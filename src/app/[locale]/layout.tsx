@@ -1,8 +1,13 @@
 import "./globals.css";
 
-import { getLocale, getTranslations } from "next-intl/server";
-
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { NextIntlClientProvider } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
+
+export function generateStaticParams() {
+    return [{ locale: "en" }, { locale: "zh" }];
+}
 
 export async function generateMetadata() {
     const t = await getTranslations("Metadata");
@@ -13,16 +18,32 @@ export async function generateMetadata() {
     };
 }
 
-export default function RootLayout({ children, params }: { children: React.ReactNode; params: any }) {
-    const locale = getLocale();
-
-    // Show a 404 error if the user requests an unknown locale
-    if (params?.locale !== locale) {
-        notFound(); // don't return this, just throw
+export default async function RootLayout({
+    children,
+    params: { locale },
+}: {
+    children: React.ReactNode;
+    params: { locale: string };
+}) {
+    let messages;
+    try {
+        messages = (await import(`@/messages/${locale}.json`)).default;
+    } catch (error) {
+        notFound();
     }
+    // Show a 404 error if the user requests an unknown locale
+
     return (
         <html lang={locale}>
-            <body className="bg-white text-black">{children}</body>
+            <body className="bg-white text-black">
+                <NextIntlClientProvider locale={locale} messages={messages}>
+                    <nav>
+                        <LanguageSwitcher />
+                    </nav>
+
+                    {children}
+                </NextIntlClientProvider>
+            </body>
         </html>
     );
 }
